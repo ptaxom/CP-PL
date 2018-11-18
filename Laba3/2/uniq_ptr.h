@@ -1,86 +1,86 @@
 #pragma once
 
-#include <iostream>
-
 template<typename T>
-class UniqPtr 
+class UniqPtr
 {
 public:
 
-	UniqPtr()
-	{
-		ptr = nullptr;
-	}
+	UniqPtr() : ptr(nullptr)
+	{}
 
-	UniqPtr(T* ptr)
-	{
-		this->ptr = ptr;
-	}
+	UniqPtr(T* ptr) : ptr(ptr)
+	{}
 
-	~UniqPtr() {
-		//std::cout << "Destruct: " << ptr << std::endl;
+	~UniqPtr() 
+	{
 		this->Reset();
 	}
 
 
 	UniqPtr(const UniqPtr<T> &ptr) = delete;  //Copy constructor 
 
+	UniqPtr<T> &operator=(const UniqPtr<T> &ptr) = delete;  //Copy assigment
+
+	
+
 	UniqPtr(UniqPtr<T> &&other) : ptr(other.ptr)			//Move constructor
 	{
 		other.ptr = nullptr;
 	}
 
-	UniqPtr<T> &operator=(const UniqPtr<T> &ptr) = delete;  //Copy assigment
-
 	UniqPtr<T> &operator=(UniqPtr<T> &&other)			  //Move assigment
 	{
-		this->ptr = other.ptr;
-		other.ptr = nullptr;
+		Reset(other.Release());
 		return *this;
 	}
 
 
 
-	bool Empty() const {
+	bool Empty() const 
+	{
 		return ptr == nullptr;
 	}
 
-	void Reset() {
-		if (!Empty()) {
+	void Reset() 
+	{
+		if (!Empty()) 
+		{
 			delete ptr;
 			ptr = nullptr;
 		}
 	}
 
-	void Reset(UniqPtr<T> &other) {
+	void Reset(T *other) 
+	{
 		this->Reset();
-		this->ptr = other.ptr;
-		other.ptr = nullptr;
+		this->ptr = other;
+		other = nullptr;
 	}
 
-	T& operator*() const {
+	T& operator*() const 
+	{
 		return *ptr;
 	}
 
-	T* operator->() const {
+	T* operator->() const 
+	{
 		return ptr;
 	}
 
 
-	operator T*() const {
+	operator T*() const 
+	{
 		return ptr;
 	}
 
 
-	T* Release() 
+	T* Release()
 	{
 		T* buf = this->ptr;
 		this->ptr = nullptr;
-		
 		return buf;
 	}
 
 private:
 	T* ptr;
-
 };

@@ -13,7 +13,8 @@ public:
 	SmartPtr(T* ptr) : ptr(ptr)
 	{}
 
-	~SmartPtr() {
+	~SmartPtr() 
+	{
 		this->Reset();
 	}
 
@@ -49,11 +50,11 @@ public:
 		}
 	}
 
-	void Reset(SmartPtr<T> &other) 
+	void Reset(T* other) 
 	{
 		this->Reset();
-		this->ptr = other.ptr;
-		other.ptr = nullptr;
+		this->ptr = other;
+		other = nullptr;
 	}
 
 
@@ -69,7 +70,6 @@ public:
 	{
 		return ptr;
 	}
-
 
 	operator T*() const 
 	{
