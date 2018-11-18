@@ -4,70 +4,79 @@ template<typename T>
 class SmartPtr {
 
 public:
-	
-	SmartPtr() 
-	{
-		ptr = nullptr;
-	}
 
-	SmartPtr( T* ptr) 
-	{
-		this->ptr = ptr;
-	}
+	//Constructor section
+
+	SmartPtr() : ptr(nullptr)
+	{}
+
+	SmartPtr(T* ptr) : ptr(ptr)
+	{}
 
 	~SmartPtr() {
 		this->Reset();
 	}
 
+	//Deleted constructors
 
 	SmartPtr(const SmartPtr<T> &ptr) = delete;  //Copy constructor 
 
 	SmartPtr(SmartPtr<T> &&other) = delete;				//Move constructor
 
 
-	SmartPtr<T> &operator=(const SmartPtr<T> &ptr) = delete;    //Copy assigment
-	
-	SmartPtr<T> &operator=(SmartPtr<T> &&other) 		  //Move assigment
+	SmartPtr<T> &operator=(const SmartPtr<T> &ptr) = delete;    //Copy assignment
+
+	//Assignment 
+
+	SmartPtr<T> &operator=(SmartPtr<T> &&other) 		  //Move assignment
 	{
 		this->Reset(other);
 		return *this;
 	}
 
+	//Methods
 
-
-	bool Empty() const {
+	bool Empty() const 
+	{
 		return ptr == nullptr;
 	}
 
-	void Reset() {
+	void Reset() 
+	{
 		if (!Empty()) {
 			delete ptr;
 			ptr = nullptr;
 		}
 	}
 
-	void Reset(SmartPtr<T> &other) {
+	void Reset(SmartPtr<T> &other) 
+	{
 		this->Reset();
 		this->ptr = other.ptr;
 		other.ptr = nullptr;
 	}
 
-	T& operator*() const {
+
+	//Overload operators
+
+
+	T& operator*() const 
+	{
 		return *ptr;
 	}
 
-	T* operator->() const {
+	T* operator->() const 
+	{
 		return ptr;
 	}
 
 
-	operator T*() const {
+	operator T*() const 
+	{
 		return ptr;
 	}
 
 
 private:
 	T* ptr;
-
-
 };
