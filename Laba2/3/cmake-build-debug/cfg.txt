@@ -1,0 +1,10 @@
+HeroName "Nagibator433"
+HeroColor "Yellow"
+HeroAge 77
+HeroDamage 32.7
+HeroSpeed as32f
+
+MobName "Gumbo"
+MobColor "Gray
+MobSpeed 5
+MobDamage 3
