@@ -11,7 +11,7 @@ public:
 	UniqPtr(T* ptr) : ptr(ptr)
 	{}
 
-	~UniqPtr() 
+	~UniqPtr()
 	{
 		this->Reset();
 	}
@@ -21,7 +21,7 @@ public:
 
 	UniqPtr<T> &operator=(const UniqPtr<T> &ptr) = delete;  //Copy assigment
 
-	
+
 
 	UniqPtr(UniqPtr<T> &&other) : ptr(other.ptr)			//Move constructor
 	{
@@ -36,39 +36,33 @@ public:
 
 
 
-	bool Empty() const 
+	bool Empty() const
 	{
 		return ptr == nullptr;
 	}
 
-	void Reset() 
+	void Reset(T* other = nullptr)
 	{
-		if (!Empty()) 
+		if (other != ptr)
 		{
-			delete ptr;
-			ptr = nullptr;
+			if (!Empty())
+				delete ptr;
+			ptr = other;
 		}
 	}
 
-	void Reset(T *other) 
-	{
-		this->Reset();
-		this->ptr = other;
-		other = nullptr;
-	}
-
-	T& operator*() const 
+	T& operator*() const
 	{
 		return *ptr;
 	}
 
-	T* operator->() const 
+	T* operator->() const
 	{
 		return ptr;
 	}
 
 
-	operator T*() const 
+	operator T*() const
 	{
 		return ptr;
 	}

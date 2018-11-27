@@ -18,12 +18,12 @@ class TestNumber
 public:
 	TestNumber()
 	{
-		std::cout << "=========Test " << number << "==========" << endl;
+		std::cout << "=========Test "<<number<<"=========="<<endl;
 		++number;
 	}
 	~TestNumber()
 	{
-		std::cout << "Passed!" << endl << endl;
+		std::cout << "Passed!" << endl<<endl;
 	}
 private:
 	static int number;
@@ -64,7 +64,7 @@ enum class Result
 };
 
 template<typename Itr, typename Func>
-Result IteratorTest(Itr lhs, Itr rhs, Func func)
+Result IteratorTest(Itr lhs, Itr rhs, Func func )
 {
 	Result result = Result::Undefined;
 	try
@@ -132,7 +132,6 @@ void DoIteratorTesting(Cont& range1, ConstCont& range2, ConstCont& zero_range,
 		auto itr3 = zero_range.begin();
 		auto itr4 = std::move(itr3);
 
-		//EXPECT_EXCEPTION(*zero_range.begin());
 		EXPECT_EXCEPTION(*range1.end());
 	}
 
@@ -168,12 +167,8 @@ void DoIteratorTesting(Cont& range1, ConstCont& range2, ConstCont& zero_range,
 		//const versions
 		CompareResults(range2, ref_range2, lambda);
 
-		//zero size
-		auto result = IteratorTest(zero_range.begin(), zero_range.end(), lambda);
-		//assert(result == Result::True);
-
 		//different containers
-		result = IteratorTest(zero_range.begin(), range2.begin(), lambda);
+		auto result = IteratorTest(zero_range.begin(), range2.begin(), lambda);
 		assert(result == Result::Exception);
 	}
 
@@ -188,12 +183,8 @@ void DoIteratorTesting(Cont& range1, ConstCont& range2, ConstCont& zero_range,
 		//const versions
 		CompareResults(range2, ref_range2, lambda);
 
-		//zero size
-		auto result = IteratorTest(zero_range.begin(), zero_range.end(), lambda);
-		//assert(result == Result::False);
-
 		//different containers
-		result = IteratorTest(zero_range.begin(), range2.begin(), lambda);
+		auto result = IteratorTest(zero_range.begin(), range2.begin(), lambda);
 		assert(result == Result::Exception);
 	}
 
@@ -208,12 +199,8 @@ void DoIteratorTesting(Cont& range1, ConstCont& range2, ConstCont& zero_range,
 		//const versions
 		CompareResults(range2, ref_range2, lambda);
 
-		//zero size
-		auto result = IteratorTest(zero_range.begin(), zero_range.end(), lambda);
-		assert(result == Result::False);
-
 		//different containers
-		result = IteratorTest(zero_range.begin(), range2.begin(), lambda);
+		auto result = IteratorTest(zero_range.begin(), range2.begin(), lambda);
 		assert(result == Result::Exception);
 	}
 
@@ -228,12 +215,8 @@ void DoIteratorTesting(Cont& range1, ConstCont& range2, ConstCont& zero_range,
 		//const versions
 		CompareResults(range2, ref_range2, lambda);
 
-		//zero size
-		auto result = IteratorTest(zero_range.begin(), zero_range.end(), lambda);
-		//assert(result == Result::False);
-
 		//different containers
-		result = IteratorTest(zero_range.begin(), range2.begin(), lambda);
+		auto result = IteratorTest(zero_range.begin(), range2.begin(), lambda);
 		assert(result == Result::Exception);
 	}
 
@@ -248,12 +231,8 @@ void DoIteratorTesting(Cont& range1, ConstCont& range2, ConstCont& zero_range,
 		//const versions
 		CompareResults(range2, ref_range2, lambda);
 
-		//zero size
-		auto result = IteratorTest(zero_range.begin(), zero_range.end(), lambda);
-		//assert(result == Result::True);
-
 		//different containers
-		result = IteratorTest(zero_range.begin(), range2.begin(), lambda);
+		auto result = IteratorTest(zero_range.begin(), range2.begin(), lambda);
 		assert(result == Result::Exception);
 	}
 
@@ -268,12 +247,8 @@ void DoIteratorTesting(Cont& range1, ConstCont& range2, ConstCont& zero_range,
 		//const versions
 		CompareResults(range2, ref_range2, lambda);
 
-		//zero size
-		auto result = IteratorTest(zero_range.begin(), zero_range.end(), lambda);
-		assert(result == Result::True);
-
 		//different containers
-		result = IteratorTest(zero_range.begin(), range2.begin(), lambda);
+		auto result = IteratorTest(zero_range.begin(), range2.begin(), lambda);
 		assert(result == Result::Exception);
 	}
 }
@@ -309,6 +284,7 @@ void ElementTest(Cont& cont, RefCont& ref_cont)
 
 int main()
 {
+	vector<int> a;
 	try
 	{
 		//test 0
@@ -321,20 +297,20 @@ int main()
 			Range range3(11, 100, 3);
 			const Range range4(71, -17, -5);
 
-			const Range zero_range(0, 0);
+			const Range one_number_range(10, 10);
 
 			//first and last
 			assert(range1.first() == 40);
 			assert(range2.first() == 40);
 			assert(range3.first() == 11);
 			assert(range4.first() == 71);
-			//EXPECT_EXCEPTION(zero_range.first());
+			assert(one_number_range.first() == 10);
 
 			assert(range1.last() == 50);
 			assert(range2.last() == -30);
 			assert(range3.last() == 98);
 			assert(range4.last() == -14);
-			//EXPECT_EXCEPTION(zero_range.last());
+			assert(one_number_range.last() == 10);
 		}
 
 		//test 1
@@ -358,8 +334,6 @@ int main()
 			OutContainer<const Range>(Range(0, 100));
 			OutContainer<const Range>(Range(0, 100, 2));
 		}
-
-
 
 		Range range1(40, 50);
 		const Range range2(40, -30, -1);
@@ -387,7 +361,7 @@ int main()
 			auto test = TestNumber();
 			assert(SizeTest(range1) == SizeTest(ref_range1));
 			assert(SizeTest(range2) == SizeTest(ref_range2));
-			//assert(SizeTest(zero_range) == 0);
+			assert(SizeTest(zero_range) == 1);
 		}
 
 		//test 21: operator[]
@@ -400,10 +374,10 @@ int main()
 	}
 	catch (std::exception& ex)
 	{
-		cout << ex.what() << endl;
-		cout << "So sad! " << endl;
+		cout << ex.what()<<endl;
+		cout << "So sad! "<<endl;
 	}
-
+	
 	cin.get();
 	return 0;
 }

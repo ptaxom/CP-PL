@@ -13,7 +13,7 @@ public:
 	SmartPtr(T* ptr) : ptr(ptr)
 	{}
 
-	~SmartPtr() 
+	~SmartPtr()
 	{
 		this->Reset();
 	}
@@ -31,47 +31,44 @@ public:
 
 	SmartPtr<T> &operator=(SmartPtr<T> &&other) 		  //Move assignment
 	{
-		this->Reset(other);
+		this->Reset(other.ptr);
+		other.ptr = nullptr;
 		return *this;
 	}
 
 	//Methods
 
-	bool Empty() const 
+	bool Empty() const
 	{
 		return ptr == nullptr;
 	}
 
-	void Reset() 
-	{
-		if (!Empty()) {
-			delete ptr;
-			ptr = nullptr;
-		}
-	}
 
-	void Reset(T* other) 
+	void Reset(T* other = nullptr)
 	{
-		this->Reset();
-		this->ptr = other;
-		other = nullptr;
+		if (other != ptr)
+		{
+			if (!Empty())
+				delete ptr;
+			ptr = other;
+		}
 	}
 
 
 	//Overload operators
 
 
-	T& operator*() const 
+	T& operator*() const
 	{
 		return *ptr;
 	}
 
-	T* operator->() const 
+	T* operator->() const
 	{
 		return ptr;
 	}
 
-	operator T*() const 
+	operator T*() const
 	{
 		return ptr;
 	}

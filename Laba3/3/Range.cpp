@@ -15,13 +15,11 @@ namespace ranges
 
 	int Range::first() const
 	{
-		//if (begin_ == end_) throw std::exception("crutch!");
 		return begin_;
 	}
 
 	int Range::last() const
 	{
-		//if (begin_ == end_) throw std::exception("crutch!");
 		return end_;
 	}
 
@@ -34,32 +32,6 @@ namespace ranges
 	{
 		return step_;
 	}
-
-	//Non-const iterators
-
-	/*
-	MyIterator Range::begin() 
-	{
-		return this->factoryIterator(first());
-	}
-
-	MyIterator Range::end() 
-	{
-		return this->factoryIterator(last() + step_);
-	}
-
-	MyIterator Range::rbegin() 
-	{
-		return this->factoryIterator(last(), 1);
-	}
-
-	MyIterator Range::rend() 
-	{
-		return this->factoryIterator(first() - step_, 1);
-	}
-
-	*/
-	
 
 	//const Iterators
 
@@ -82,8 +54,5 @@ namespace ranges
 	{
 		return this->factoryIterator(first() - step_, 1);
 	}
-
-
-
 
 }

@@ -38,12 +38,12 @@ namespace ranges
 
 
 		friend class Range;
-		
+
 		MyIterator(int value, int type, const Range &master) : value_(value), type_(type), master_(master)
 		{}
 
 		int getStep() const;
-		
+
 
 	};
 
@@ -63,7 +63,7 @@ namespace ranges
 		int size() const;
 
 		int getStep() const;
-	   
+
 		MyIterator begin() const;
 
 		MyIterator end() const;
@@ -87,7 +87,7 @@ namespace ranges
 			else return std::make_pair(end_, begin_ - step_);
 		}
 
-		inline bool isOutOfBounds(int value, int boundsType, bool isStrictCompare = false) const  
+		inline bool isOutOfBounds(int value, int boundsType, bool isStrictCompare = false) const
 		{
 			auto bounds = getBounds(boundsType);
 			int offset1 = sign(value - bounds.first);
